@@ -19,7 +19,13 @@ contract('SpringEscrow', (accounts) => {
     const sig = web3.eth.sign(web3.eth.accounts[0], h).slice(2)
     const r = `0x${sig.slice(0, 64)}`
     const s = `0x${sig.slice(64, 128)}`
-    const v = web3.toDecimal(sig.slice(128, 130)) + 27
+    const v_decimal = web3.toDecimal('0x' + sig.slice(128, 130))
+    var v;
+    if (v_decimal < 27) { 
+      v = v_decimal + 27
+    } else {
+      v = v_decimal
+    }
     const signerAddress = await instance.verifySignature(h, v, r, s)
 
     assert.equal(signerAddress, account, "Address of signer should be equal to sender's account")
