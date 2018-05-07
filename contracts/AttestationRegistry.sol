@@ -1,8 +1,17 @@
 pragma solidity ^0.4.23;
 
-contract AttestationRegistry {
+import './lib/Ownable.sol';
+import './token/SpringCoin.sol';
+
+contract AttestationRegistry is Ownable {
   mapping(bytes32 => bytes32) attestations;
   uint256 price = 1000000000000000000;
+
+  SpringCoin public springCoin;
+
+  constructor(address _springCoinAddress) public {
+    springCoin = SpringCoin(_springCoinAddress);
+  }
 
   event AttestationCreationLog(bytes32 customerId, bytes32 attestationVerification);
 
@@ -28,7 +37,7 @@ contract AttestationRegistry {
    * @dev Function to set the price to stake for any attestation creation
    * @param _price [Price in Wei required to create a new attestation]
    */
-  function setPrice(uint256 _price) public {
+  function setPrice(uint256 _price) onlyOwner public {
     price = _price;
   }
 }
