@@ -7,7 +7,7 @@ const PRIVATE_KEY="0x789610cb2d3bd970aadc1f9fb119f85ebdc25a0cecbdd86d9af28901c12
 
 contract('SpringEscrow', (accounts) => {
   const coinbase = accounts[0]
-  let instance;
+  let instance
 
   beforeEach(`create subject instance before each test`, async () => {
     instance = await SpringEscrow.deployed();
