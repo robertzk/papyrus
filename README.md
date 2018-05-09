@@ -21,6 +21,9 @@ What things you need to install the software and how to install them
 Create a truffle.js at the root of /papyrus with the content :
 
 ```
+require('babel-register');
+require('babel-polyfill');
+
   module.exports = {
     // See <http://truffleframework.com/docs/advanced/configuration>
     // to customize your Truffle configuration!
@@ -35,6 +38,14 @@ Create a truffle.js at the root of /papyrus with the content :
     }
   };
 
+```
+
+To use ES6 syntax (like the `import` keyword) you will need to create a `.babelrc` in the papyrus root folder:
+
+```
+{
+    "presets": ["es2015", "stage-2", "stage-3"]
+}
 ```
 
 Compile & Migratione contracts into Sopsten Network
