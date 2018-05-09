@@ -24,8 +24,8 @@ contract('SpringEscrow', (accounts) => {
     signature = signature.substr(2, signature.length)
     const r = '0x' + signature.substr(0, 64)
     const s = '0x' + signature.substr(64, 128)
-    const v = web3.utils.toDecimal('0x' + signature.substr(128, 130)) + 27
-
+    var v = web3.utils.toDecimal('0x' + signature.substr(128, 130))
+    v = v < 27 ? v + 27 : v
     const signerAddress = await instance.verifySignature(hashMsg, v, r, s)
 
     assert.equal(signerAddress, coinbase, "Address of signer should be equal to sender's account")
