@@ -11,8 +11,9 @@ script:
   - npm test
 before_script:
   - cp truffle-test.js truffle.js
-  - testrpc > /dev/null &
+  - testrpc > tmpout &
   - sleep 5
+  - cat tmpout
 after_script:
   - npm run coverage && cat coverage/lcov.info | coveralls
 
