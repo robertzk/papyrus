@@ -11,6 +11,7 @@ contract SpringCoin is StandardToken, Ownable {
   string public name = "SpringCoin";
   uint8 public decimals = 18;
   string public symbol = "SPNG";
+  address SpringEscrow;
   uint256 public totalSupply = 1000000000000000000000000000;
 
   uint256 public rateETH = 10;
@@ -19,6 +20,10 @@ contract SpringCoin is StandardToken, Ownable {
 
   constructor() public {
     balances[owner] = totalSupply;
+  }
+  
+  function setEscrowAddress(address escrow) onlyOwner {
+    SpringEscrow = escrow;
   }
 
   function () public payable {
@@ -41,6 +46,14 @@ contract SpringCoin is StandardToken, Ownable {
   }
 
   function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {
-    return super.transferFrom(_from, _to, _value);
+    if (msg.sender == SpringEscrow) {
+      require(balances[_from] >= _value && balances[_to] + _value > balances[_to]);
+      balances[_to] += _value;
+      balances[_from] -= _value;
+      emit Transfer(_from, _to, _value);
+      return true;
+    } else {
+      return super.transferFrom(_from, _to, _value);
+    }
   }
 }
