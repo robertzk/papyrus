@@ -11,7 +11,7 @@ script:
   - npm test
 before_script:
   - cp truffle-test.js truffle.js
-  - testrpc > tmpout &
+  - ganache-cli > tmpout &
   - sleep 5
   - cat tmpout
 after_script:
