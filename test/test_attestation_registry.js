@@ -35,7 +35,7 @@ contract('AttestationRegistry', (accounts) => {
 
     const transactionReceipt = await instance.createAttestation(customerSpringHash, attestationHash, {value: web3.utils.toWei("2", 'ether')})
 
-    assert.equal(transactionReceipt.logs[0].event, 'AttestationCreationLog', 'Attestation Creation event is emitted')
+    assert.equal(transactionReceipt.logs[0].event, 'AttestationCreationLog2', 'Attestation Creation event is emitted')
     assert.equal(transactionReceipt.logs[0].args.customerId, customerSpringHash, 'customerId == customerSpringHash')
     assert.equal(transactionReceipt.logs[0].args.attestationVerification, attestationHash, 'attestationVerification == attestationHash')
   })
